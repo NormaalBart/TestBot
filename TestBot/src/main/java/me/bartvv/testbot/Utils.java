@@ -40,7 +40,7 @@ public class Utils {
 		sendMessage( channel, messageEmbed, 10 );
 	}
 
-	public static void sendMessage( MessageChannel channel, MessageEmbed messageEmbed, int secondsAfterDelete ) {
+	public static void sendMessage( MessageChannel channel, MessageEmbed messageEmbed, final int secondsAfterDelete ) {
 		if ( secondsAfterDelete < 0 ) {
 			channel.sendMessage( messageEmbed ).queue();
 		} else {
@@ -58,7 +58,7 @@ public class Utils {
 		sendMessage( channel, message, 10 );
 	}
 
-	public static void sendMessage( MessageChannel channel, String message, int secondsAfterDelete ) {
+	public static void sendMessage( MessageChannel channel, String message, final int secondsAfterDelete ) {
 		if ( secondsAfterDelete < 0 ) {
 			channel.sendMessage( message ).queue();
 		} else {

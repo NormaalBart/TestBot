@@ -9,5 +9,5 @@ public interface ICommand {
 	public String getDescription();
 
 	public String getUsage();
-	
+
 }
