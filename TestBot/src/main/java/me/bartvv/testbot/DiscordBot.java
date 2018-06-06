@@ -22,7 +22,7 @@ public class DiscordBot {
 
 		try {
 			jda = builder.buildBlocking();
-		} catch ( LoginException | InterruptedException | RateLimitedException e ) {
+		} catch ( LoginException | IllegalArgumentException | InterruptedException | RateLimitedException e ) {
 			e.printStackTrace();
 		}
 		jda.addEventListener( new CommandListener() );
