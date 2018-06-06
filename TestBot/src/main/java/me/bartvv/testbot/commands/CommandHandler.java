@@ -39,6 +39,7 @@ public class CommandHandler {
 			User user = e.getAuthor();
 			Utils.sendMessage( channel, user.getAsMention() + " this is not a command type `" + Utils.getCommand()
 					+ "help` for the commands " );
+			return;
 		}
 		command.onCommand( e );
 	}
