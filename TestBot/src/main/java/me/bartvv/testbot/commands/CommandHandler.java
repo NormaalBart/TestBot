@@ -26,6 +26,7 @@ public class CommandHandler {
 		commands.put( "ping", new Commandping() );
 		commands.put( "clear", new CommandClear() );
 		commands.put( "here", new Commandhere() );
+		commands.put( "support", new Commandsupport() );
 	}
 
 	public void processCommand( GuildMessageReceivedEvent e ) {
