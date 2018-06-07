@@ -61,5 +61,4 @@ public class CommandClear implements ICommand {
 	public String getUsage() {
 		return "Clear <amount>";
 	}
-
 }
