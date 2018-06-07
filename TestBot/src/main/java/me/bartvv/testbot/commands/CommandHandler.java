@@ -36,7 +36,6 @@ public class CommandHandler {
 		TextChannel channel = e.getChannel();
 
 		ICommand command = commands.get( commandString.toLowerCase() );
-		message.delete().complete();
 		if ( command == null ) {
 			User user = e.getAuthor();
 			Utils.sendMessage( channel, user.getAsMention() + " this is not a command type `" + Utils.getCommand()
@@ -44,5 +43,6 @@ public class CommandHandler {
 			return;
 		}
 		command.onCommand( e );
+		message.delete().queue();
 	}
 }
