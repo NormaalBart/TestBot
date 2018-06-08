@@ -10,7 +10,7 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
-public class CommandClear implements ICommand {
+public class Commandclear implements ICommand {
 
 	@Override
 	public void onCommand( GuildMessageReceivedEvent e ) {
