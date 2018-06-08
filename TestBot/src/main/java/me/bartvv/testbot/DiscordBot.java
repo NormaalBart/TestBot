@@ -3,6 +3,7 @@ package me.bartvv.testbot;
 import javax.security.auth.login.LoginException;
 
 import me.bartvv.testbot.listener.CommandListener;
+import me.bartvv.testbot.listener.GuildJoin;
 import me.bartvv.testbot.listener.PrivateMSGListener;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -29,5 +30,6 @@ public class DiscordBot {
 		}
 		jda.addEventListener( new CommandListener() );
 		jda.addEventListener( new PrivateMSGListener() );
+		jda.addEventListener( new GuildJoin() );
 	}
 }
