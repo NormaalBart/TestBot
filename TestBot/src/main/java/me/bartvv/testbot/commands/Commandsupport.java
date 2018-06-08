@@ -2,6 +2,7 @@ package me.bartvv.testbot.commands;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import me.bartvv.testbot.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -30,22 +31,24 @@ public class Commandsupport implements ICommand {
 		Guild guild = e.getGuild();
 		User user = e.getAuthor();
 		Category category = guild.getCategoryById( Utils.getSupportCategory() );
-		List< TextChannel > channel = guild.getTextChannelsByName( "support-" + user.getName(), true );
-		if ( channel == null || channel.isEmpty() ) {
-			ChannelAction channelAction = category.createTextChannel( "support-" + user.getName() );
-			channelAction.setTopic( "Support channel for " + user.getName() );
-			channelAction.queue( new Consumer< Channel >() {
+		List< TextChannel > channels = category.getTextChannels().stream().filter(
+				channel -> channel.getName().toLowerCase().startsWith( "support-" + user.getName().toLowerCase() ) )
+				.collect( Collectors.toList() );
 
-				@Override
-				public void accept( Channel channel ) {
-					TextChannel textChannel = ( TextChannel ) channel;
-					textChannel.sendMessage( "Please ask the question so Support can help you, " + user.getAsMention() )
-							.queue();
-				}
-			} );
-			return;
-		}
-		Utils.sendMessage( e.getChannel(), "You cannot create more then one support channel." );
+		String channelName = "support-" + user.getName() + "-"
+				+ ( ( channels == null || channels.isEmpty() ) ? 1 : ( channels.size() + 1 ) );
+
+		ChannelAction channelAction = category.createTextChannel( channelName );
+		channelAction.setTopic( "Support channel for " + user.getName() );
+		channelAction.queue( new Consumer< Channel >() {
+
+			@Override
+			public void accept( Channel channel ) {
+				TextChannel textChannel = ( TextChannel ) channel;
+				textChannel.sendMessage( "Please ask the question so Support can help you, " + user.getAsMention() )
+						.queue();
+			}
+		} );
 		return;
 	}
 
