@@ -24,9 +24,10 @@ public class CommandHandler {
 		commands.put( "kick", new Commandkick() );
 		commands.put( "online", new Commandonline() );
 		commands.put( "ping", new Commandping() );
-		commands.put( "clear", new CommandClear() );
+		commands.put( "clear", new Commandclear() );
 		commands.put( "here", new Commandhere() );
 		commands.put( "support", new Commandsupport() );
+		commands.put( "close", new Commandclose() );
 	}
 
 	public void processCommand( GuildMessageReceivedEvent e ) {

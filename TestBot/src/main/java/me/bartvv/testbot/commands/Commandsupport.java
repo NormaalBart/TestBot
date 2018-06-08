@@ -17,6 +17,16 @@ public class Commandsupport implements ICommand {
 
 	@Override
 	public void onCommand( GuildMessageReceivedEvent e ) {
+		TextChannel textChannel = e.getChannel();
+		if ( textChannel.getIdLong() != Utils.getSupportChannel()
+				&& textChannel.getIdLong() != Utils.getBotChannel() ) {
+			e.getMessage().delete().complete();
+			TextChannel botChannel = e.getGuild().getTextChannelById( Utils.getBotChannel() );
+			Utils.sendMessage( textChannel, "Please refrain from using other channel's then the " + botChannel
+					+ " channel, " + e.getAuthor().getAsMention() );
+			return;
+		}
+
 		Guild guild = e.getGuild();
 		User user = e.getAuthor();
 		Category category = guild.getCategoryById( Utils.getSupportCategory() );
@@ -35,9 +45,7 @@ public class Commandsupport implements ICommand {
 			} );
 			return;
 		}
-		EmbedBuilder builder = Utils.createDefaultBuilder();
-		builder.addField( "You cannot create more then one support channel.", "", false );
-		Utils.sendMessage( e.getChannel(), builder.build() );
+		Utils.sendMessage( e.getChannel(), "You cannot create more then one support channel." );
 		return;
 	}
 
