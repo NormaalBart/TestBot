@@ -16,10 +16,10 @@ public class GuildJoin extends ListenerAdapter {
 		Guild guild = e.getGuild();
 		int size = guild.getMembers().size();
 		EmbedBuilder builder = Utils.createDefaultBuilder();
-		builder.addField( member.getAsMention() + " welcome to our discord server!",
-				"You are the " + size + " member of this discord!", false );
+		builder.addField( member.getUser().getName() + " welcome to our discord server!",
+				"Their are now " + size + " members in this discord.", false );
 		TextChannel channel = guild.getTextChannelById( Utils.getJoinChannel() );
-		channel.sendMessage( builder.build() );
+		channel.sendMessage( builder.build() ).queue();
 	}
 
 }
