@@ -1,9 +1,12 @@
 package me.bartvv.testbot.commands;
 
 import java.time.Instant;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import me.bartvv.testbot.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -17,7 +20,7 @@ public class Commandhere implements ICommand {
 	private static final long TIME_BETWEEN_HERE = TimeUnit.HOURS.toMillis( 24 );
 
 	public Commandhere() {
-		this.cooldowns = new HashMap<>();
+		this.cooldowns = Maps.newHashMap();
 	}
 
 	@Override
@@ -64,6 +67,11 @@ public class Commandhere implements ICommand {
 	@Override
 	public String getUsage() {
 		return "Here";
+	}
+
+	@Override
+	public List< ChannelType > getChannelTypes() {
+		return Lists.newArrayList( ChannelType.BOT_CHANNEL, ChannelType.ACTIVITY_CHANNEL );
 	}
 
 }
