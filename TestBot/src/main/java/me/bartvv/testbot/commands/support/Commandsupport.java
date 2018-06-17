@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 
 import me.bartvv.testbot.Utils;
 import me.bartvv.testbot.commands.ChannelType;
+import me.bartvv.testbot.commands.CommandHandler;
 import me.bartvv.testbot.commands.ICommand;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Category;
@@ -19,6 +20,11 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.requests.restaction.ChannelAction;
 
 public class Commandsupport implements ICommand {
+
+	public Commandsupport( CommandHandler commandHandler ) {
+		commandHandler.getCommands().put( "add", new Commandadd() );
+		
+	}
 
 	@Override
 	public void onCommand( GuildMessageReceivedEvent e ) {
