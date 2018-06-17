@@ -1,6 +1,5 @@
 package me.bartvv.testbot.commands.support;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -14,7 +13,6 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Category;
 import net.dv8tion.jda.core.entities.Channel;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
@@ -46,16 +44,14 @@ public class Commandsupport implements ICommand {
 
 		ChannelAction channelAction = category.createTextChannel( channelName );
 		channelAction.setTopic( "Support channel for " + user.getName() );
-		Role role = guild.getRolesByName( "Maker", true ).get( 0 );
-		List< Permission > permissions = new ArrayList<>();
+		List< Permission > permissions = Lists.newArrayList();
 		permissions.add( Permission.VIEW_CHANNEL );
 		permissions.add( Permission.MESSAGE_READ );
 		permissions.add( Permission.MESSAGE_ADD_REACTION );
 		permissions.add( Permission.MESSAGE_WRITE );
 		permissions.add( Permission.MESSAGE_ATTACH_FILES );
 		permissions.add( Permission.MESSAGE_HISTORY );
-		channelAction.addPermissionOverride( role, permissions, new ArrayList<>() );
-		channelAction.addPermissionOverride( e.getMember(), permissions, new ArrayList<>() );
+		channelAction.addPermissionOverride( e.getMember(), permissions, Lists.newArrayList() );
 		channelAction.queue( new Consumer< Channel >() {
 
 			@Override
