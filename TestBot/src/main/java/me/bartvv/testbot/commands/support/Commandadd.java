@@ -13,7 +13,6 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.PermissionOverride;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.requests.restaction.PermissionOverrideAction;
 
@@ -35,12 +34,13 @@ public class Commandadd implements ICommand {
 			return;
 		}
 
-		User target = e.getMessage().getMentionedUsers().isEmpty() ? null : e.getMessage().getMentionedUsers().get( 0 );
-		if ( target == null ) {
+		String targetName = e.getMessage().getRawContent().split( " " )[ 1 ];
+		List< Member > targetMembers = e.getGuild().getMembersByName( targetName, true );
+		if ( targetMembers == null || targetMembers.isEmpty() ) {
 			Utils.sendMessage( channel, member.getAsMention() + " user not found" );
 			return;
 		}
-		Member targetMember = e.getGuild().getMember( target );
+		Member targetMember = targetMembers.get( 0 );
 		if ( channel.canTalk( targetMember ) ) {
 			Utils.sendMessage( channel, "This user is already in this channel" );
 			return;
@@ -59,7 +59,7 @@ public class Commandadd implements ICommand {
 			@Override
 			public void accept( PermissionOverride t ) {
 				EmbedBuilder builder = Utils.createDefaultBuilder();
-				builder.addField( "Added " + target.getName() + " to the support-ticket", "", false );
+				builder.addField( "Added " + targetMember.getUser().getName() + " to the support-ticket", "", false );
 				channel.sendMessage( builder.build() ).queue();
 			}
 		} );
