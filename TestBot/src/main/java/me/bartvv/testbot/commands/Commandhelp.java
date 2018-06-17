@@ -19,8 +19,9 @@ public class Commandhelp implements ICommand {
 		embed.addField( "Help menu", "", false );
 		embed.addField( "[] = Optional, <> = Required", "", false );
 		embed.addField( "Commands: ", "", false );
-		for ( ICommand iCommand : this.commandHandler.getCommands() ) {
-			embed.addField( "**" + Utils.getCommand() + iCommand.getUsage() + ":**", iCommand.getDescription(), false );
+		for ( ICommand iCommand : this.commandHandler.getCommands().values() ) {
+			embed.addField( "", "`" + Utils.getCommand() + iCommand.getUsage() + "`: " + iCommand.getDescription(),
+					false );
 		}
 		TextChannel channel = e.getChannel();
 		Utils.sendMessage( channel, embed.build() );
