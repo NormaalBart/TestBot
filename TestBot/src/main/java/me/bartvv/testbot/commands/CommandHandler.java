@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.bartvv.testbot.Utils;
+import me.bartvv.testbot.commands.support.Commandsupport;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -14,8 +15,8 @@ public class CommandHandler {
 
 	private Map< String, ICommand > commands;
 
-	public Collection< ICommand > getCommands() {
-		return commands.values();
+	public Map< String, ICommand > getCommands() {
+		return commands;
 	}
 
 	public CommandHandler() {
@@ -28,6 +29,7 @@ public class CommandHandler {
 		commands.put( "here", new Commandhere() );
 		commands.put( "support", new Commandsupport() );
 		commands.put( "close", new Commandclose() );
+		commands.put( "prime", new Commandprime() );
 	}
 
 	public void processCommand( GuildMessageReceivedEvent e ) {
