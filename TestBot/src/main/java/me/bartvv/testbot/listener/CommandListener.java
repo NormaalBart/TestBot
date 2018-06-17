@@ -43,7 +43,7 @@ public class CommandListener extends ListenerAdapter {
 			String commandString = rawMessage.split( " " )[ 0 ].replace( Utils.getCommand(), "" );
 
 			ICommand command = this.commandHandler.getCommands().get( commandString.toLowerCase() );
-			ChannelType channelType = ChannelType.getChannelType( channel.getIdLong() );
+			ChannelType channelType = ChannelType.getChannelType( channel );
 
 			if ( command != null && command.getChannelTypes().contains( channelType ) ) {
 				this.commandHandler.processCommand( e );

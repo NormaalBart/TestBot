@@ -1,6 +1,5 @@
 package me.bartvv.testbot.commands;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +26,7 @@ public class CommandHandler {
 		commands.put( "ping", new Commandping() );
 		commands.put( "clear", new Commandclear() );
 		commands.put( "here", new Commandhere() );
-		commands.put( "support", new Commandsupport() );
+		commands.put( "support", new Commandsupport(this) );
 		commands.put( "close", new Commandclose() );
 		commands.put( "prime", new Commandprime() );
 	}
