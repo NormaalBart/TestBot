@@ -23,6 +23,7 @@ public class Commandsupport implements ICommand {
 
 	public Commandsupport( CommandHandler commandHandler ) {
 		commandHandler.getCommands().put( "add", new Commandadd() );
+		commandHandler.getCommands().put( "remove", new Commandremove() );
 		
 	}
 
