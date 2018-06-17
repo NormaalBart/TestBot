@@ -79,5 +79,4 @@ public class Commandadd implements ICommand {
 	public List< ChannelType > getChannelTypes() {
 		return Lists.newArrayList( ChannelType.SUPPORT_CATEGORY );
 	}
-
 }
