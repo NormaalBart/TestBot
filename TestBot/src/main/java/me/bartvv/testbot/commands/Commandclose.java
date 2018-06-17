@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+import com.google.common.collect.Lists;
+
 import me.bartvv.testbot.Utils;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
@@ -58,5 +60,10 @@ public class Commandclose implements ICommand {
 	@Override
 	public String getUsage() {
 		return "Close";
+	}
+
+	@Override
+	public List< ChannelType > getChannelTypes() {
+		return Lists.newArrayList( ChannelType.SUPPORT_CATEGORY );
 	}
 }
