@@ -45,6 +45,6 @@ public class CommandHandler {
 			return;
 		}
 		command.onCommand( e );
-		message.delete().queue();
+		message.delete().complete();
 	}
 }
