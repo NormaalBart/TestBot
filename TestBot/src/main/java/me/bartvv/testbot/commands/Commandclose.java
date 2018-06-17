@@ -1,17 +1,23 @@
 package me.bartvv.testbot.commands;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import com.google.common.collect.Lists;
 
 import me.bartvv.testbot.Utils;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.core.requests.RestAction;
 
 public class Commandclose implements ICommand {
 
@@ -41,14 +47,32 @@ public class Commandclose implements ICommand {
 			channel.sendMessage( "This channel is already being removed" ).complete();
 			return;
 		}
-		channel.sendMessage( "Deleting this channel in 10s" ).queue();
-
 		channelsBeingRemoved.add( channelName );
-		channel.delete().queueAfter( 10, TimeUnit.SECONDS, new Consumer< Void >() {
+		channel.sendMessage( "Deleting this channel in 10s" ).queue( new Consumer< Message >() {
+
+			private int countdown = 10;
+
 			@Override
-			public void accept( Void t ) {
-				channelsBeingRemoved.remove( channelName );
+			public void accept( Message message ) {
+				Timer timer = new Timer();
+				timer.schedule( new TimerTask() {
+
+					@Override
+					public void run() {
+						if ( editMessage( message ) == 0 ) {
+							channelsBeingRemoved.remove( channelName );
+							cancel();
+							channel.delete().queue();
+						}
+					}
+				}, new Date(), TimeUnit.SECONDS.toMillis( 1 ) );
 			}
+
+			private int editMessage( Message message ) {
+				message.editMessage( "Deletings this channel in " + countdown + "s" ).complete();
+				return countdown--;
+			}
+
 		} );
 	}
 
