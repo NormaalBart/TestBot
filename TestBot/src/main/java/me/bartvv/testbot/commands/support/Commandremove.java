@@ -9,13 +9,11 @@ import me.bartvv.testbot.Utils;
 import me.bartvv.testbot.commands.ChannelType;
 import me.bartvv.testbot.commands.ICommand;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.PermissionOverride;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.requests.restaction.PermissionOverrideAction;
 
 public class Commandremove implements ICommand {
 
