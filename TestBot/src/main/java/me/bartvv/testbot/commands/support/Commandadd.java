@@ -23,11 +23,7 @@ public class Commandadd implements ICommand {
 		String[] args = e.getMessage().getRawContent().split( " " );
 		TextChannel channel = e.getChannel();
 		Member member = e.getMember();
-		ChannelType channelType = ChannelType.getChannelType( channel );
-		if ( channelType == null || channelType != ChannelType.SUPPORT_CATEGORY ) {
-			Utils.sendMessage( channel, "Cannot add a member to this channel" );
-			return;
-		} else if ( args.length != 2 ) {
+		if ( args.length != 2 ) {
 			EmbedBuilder builder = Utils.createDefaultBuilder();
 			builder.addField( "Wrong usage", getUsage(), true );
 			Utils.sendMessage( channel, builder.build() );
