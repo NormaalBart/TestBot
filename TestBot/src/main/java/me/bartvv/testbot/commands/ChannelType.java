@@ -7,8 +7,7 @@ public enum ChannelType {
 
 	BOT_CHANNEL, SUPPORT_CATEGORY, SUPPORT_CHANNEL, ACTIVITY_CHANNEL;
 
-	public static ChannelType getChannelType( TextChannel channel ) {
-		long id = channel.getIdLong();
+	public static ChannelType getChannelType( long id) {
 		if ( id == Utils.getActivityChannel() )
 			return ChannelType.ACTIVITY_CHANNEL;
 		if ( id == Utils.getBotChannel() )
