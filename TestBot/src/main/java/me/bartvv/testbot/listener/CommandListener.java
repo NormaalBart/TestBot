@@ -1,10 +1,9 @@
 package me.bartvv.testbot.listener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import me.bartvv.testbot.Utils;
+import me.bartvv.testbot.commands.ChannelType;
 import me.bartvv.testbot.commands.CommandHandler;
+import me.bartvv.testbot.commands.ICommand;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -14,13 +13,9 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 public class CommandListener extends ListenerAdapter {
 
 	private CommandHandler commandHandler;
-	private List< String > exclusions;
 
 	public CommandListener() {
 		this.commandHandler = new CommandHandler();
-		this.exclusions = new ArrayList<>();
-		this.exclusions.add( Utils.getCommand() + "close" );
-		this.exclusions.add( Utils.getCommand() + "support" );
 	}
 
 	@Override
@@ -45,8 +40,12 @@ public class CommandListener extends ListenerAdapter {
 			Utils.sendMessage( channel, "This is not a command, please only use commands in this channel" );
 			return;
 		} else {
-			String[] args = rawMessage.split( " " );
-			if ( args.length >= 1 && this.exclusions.contains( args[ 0 ].toLowerCase() ) ) {
+			String commandString = rawMessage.split( " " )[ 0 ].replace( Utils.getCommand(), "" );
+
+			ICommand command = this.commandHandler.getCommands().get( commandString.toLowerCase() );
+			ChannelType channelType = ChannelType.getChannelType( channel );
+
+			if ( command != null && command.getChannelTypes().contains( channelType ) ) {
 				this.commandHandler.processCommand( e );
 				return;
 			}

@@ -1,5 +1,9 @@
 package me.bartvv.testbot.commands;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public interface ICommand {
@@ -9,5 +13,9 @@ public interface ICommand {
 	public String getDescription();
 
 	public String getUsage();
+
+	public default List< ChannelType > getChannelTypes() {
+		return Lists.newArrayList( ChannelType.BOT_CHANNEL );
+	}
 
 }
