@@ -1,9 +1,5 @@
 package me.bartvv.testbot.commands;
 
-import java.util.List;
-
-import com.google.common.collect.Lists;
-
 import me.bartvv.testbot.Utils;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;

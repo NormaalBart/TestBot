@@ -11,13 +11,11 @@ import java.util.function.Consumer;
 import com.google.common.collect.Lists;
 
 import me.bartvv.testbot.Utils;
-import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.requests.RestAction;
 
 public class Commandclose implements ICommand {
 
