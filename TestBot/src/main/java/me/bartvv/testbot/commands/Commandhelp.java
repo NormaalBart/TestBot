@@ -16,13 +16,13 @@ public class Commandhelp implements ICommand {
 	@Override
 	public void onCommand( GuildMessageReceivedEvent e ) {
 		EmbedBuilder embed = Utils.createDefaultBuilder();
-		embed.addField( "Help menu", "", false );
-		embed.addField( "[] = Optional, <> = Required", "", false );
-		embed.addField( "Commands: ", "", false );
+		embed.setDescription( "----- **TestBot** -----" + "\n" + "[] = Optional, <> = Required" + "\n" );
+		StringBuilder builder = new StringBuilder();
 		for ( ICommand iCommand : this.commandHandler.getCommands().values() ) {
-			embed.addField( "", "`" + Utils.getCommand() + iCommand.getUsage() + "`: " + iCommand.getDescription(),
-					false );
+			builder.append( "`" + Utils.getCommand() + iCommand.getUsage() + "`: " + iCommand.getDescription() );
+			builder.append( "\n" );
 		}
+		embed.addField( "Commands: ", builder.toString(), false );
 		TextChannel channel = e.getChannel();
 		Utils.sendMessage( channel, embed.build() );
 	}
