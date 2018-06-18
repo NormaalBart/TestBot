@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.core.exceptions.ErrorResponseException;
 
 public class CommandHandler {
 
@@ -48,6 +49,10 @@ public class CommandHandler {
 			return;
 		}
 		command.onCommand( e );
-		message.delete().complete();
+		try {
+			message.delete().complete();
+		} catch ( ErrorResponseException ere ) {
+			// Do nothing because the message is already deleted :)
+		}
 	}
 }
