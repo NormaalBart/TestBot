@@ -1,6 +1,9 @@
 package me.bartvv.testbot.commands;
 
 import java.util.List;
+import java.util.function.Consumer;
+
+import com.google.common.collect.Lists;
 
 import me.bartvv.testbot.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -28,28 +31,40 @@ public class Commandclear implements ICommand {
 			return;
 		}
 
-		int amount;
-		try {
-			amount = Integer.parseInt( args[ 1 ] );
-		} catch ( NumberFormatException nfe ) {
-			Utils.sendMessage( channel, member.getAsMention() + ", " + args[ 1 ] + " is not a number " );
+		else if ( !Utils.isInt( args[ 1 ] ) ) {
+			Utils.sendMessage( channel, member.getAsMention() + ", " + args[ 1 ] + " is not a number" );
 			return;
 		}
+
+		int amount = Utils.getInt( args[ 1 ] );
 
 		if ( amount < 2 || amount > 100 ) {
 			Utils.sendMessage( channel,
-					member.getAsMention() + ", number of messages deleted must be between 2 and 100." );
+					member.getAsMention() + ", messages to delete has to be between the 2 and 100" );
 			return;
 		}
-		e.getMessage().delete();
-		List< Message > history;
-		history = channel.getHistory().retrievePast( amount ).complete();
-		try {
-			channel.deleteMessages( history );
-		} catch ( IllegalArgumentException iae ) {}
 
-		Utils.sendMessage( channel, "Deleted " + history.size() + " messages" );
-		return;
+		e.getMessage().delete().complete();
+
+		channel.getHistory().retrievePast( amount ).queue( new Consumer< List< Message > >() {
+
+			@Override
+			public void accept( List< Message > messages ) {
+				if ( messages.size() < 2 ) {
+					Utils.sendMessage( channel, "Not enough messasges." );
+					return;
+				}
+				channel.deleteMessages( messages ).queue( new Consumer< Void >() {
+
+					@Override
+					public void accept( Void t ) {
+						Utils.sendMessage( channel, "Deleted " + messages.size() + " messages" );
+						return;
+					}
+				} );
+			}
+		} );
+
 	}
 
 	@Override
@@ -60,5 +75,16 @@ public class Commandclear implements ICommand {
 	@Override
 	public String getUsage() {
 		return "Clear <amount>";
+	}
+	
+	@Override
+	public List< ChannelType > getChannelTypes() {
+		return Lists.newArrayList( ChannelType.ALL );
+	}
+	
+	@Override
+	public List< String > getAliases() {
+		// TODO Auto-generated method stub
+		return ICommand.super.getAliases();
 	}
 }
