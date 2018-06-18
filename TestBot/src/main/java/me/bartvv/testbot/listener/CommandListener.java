@@ -45,8 +45,15 @@ public class CommandListener extends ListenerAdapter {
 			ICommand command = this.commandHandler.getCommands().get( commandString.toLowerCase() );
 			ChannelType channelType = ChannelType.getChannelType( channel );
 
-			if ( command != null && command.getChannelTypes().contains( channelType ) ) {
-				this.commandHandler.processCommand( e );
+			if ( command != null ) {
+				if ( command.getChannelTypes().contains( channelType )
+						|| command.getChannelTypes().contains( ChannelType.ALL ) ) {
+					this.commandHandler.processCommand( e );
+					return;
+				}
+				message.delete().complete();
+				Utils.sendMessage( channel, "Please refrain from using other channel's then the "
+						+ botChannel.getAsMention() + " channel, " + user.getAsMention() );
 				return;
 			}
 
