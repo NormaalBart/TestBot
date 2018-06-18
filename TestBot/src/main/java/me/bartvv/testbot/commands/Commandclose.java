@@ -37,7 +37,8 @@ public class Commandclose implements ICommand {
 		String memberName = member.getUser().getName();
 		if ( !channelName.toLowerCase().startsWith( "support-" + memberName.toLowerCase() )
 				&& !member.hasPermission( Permission.MANAGE_CHANNEL ) ) {
-			Utils.sendMessage( channel, "You cannot delete this support channel, " + member.getAsMention() );
+			Utils.sendMessage( channel,
+					"You cannot delete this support channel, " + member.getAsMention() + ". Please ask staff." );
 			return;
 		}
 
