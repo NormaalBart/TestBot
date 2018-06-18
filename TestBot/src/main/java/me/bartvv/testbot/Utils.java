@@ -63,7 +63,14 @@ public class Utils {
 
 				@Override
 				public void accept( Message message ) {
-					message.delete().queueAfter( secondsAfterDelete, TimeUnit.SECONDS );
+					message.delete().queueAfter( secondsAfterDelete, TimeUnit.SECONDS, null,
+							new Consumer< Throwable >() {
+
+								public void accept( Throwable t ) {
+									return;
+								}
+
+							} );
 				}
 			} );
 		}
@@ -81,10 +88,33 @@ public class Utils {
 
 				@Override
 				public void accept( Message message ) {
-					message.delete().queueAfter( secondsAfterDelete, TimeUnit.SECONDS );
+					message.delete().queueAfter( secondsAfterDelete, TimeUnit.SECONDS, null,
+							new Consumer< Throwable >() {
+
+								public void accept( Throwable t ) {
+									return;
+								}
+
+							} );
 				}
 			} );
 		}
+	}
+
+	public static boolean isInt( String arg ) {
+		try {
+			Integer.parseInt( arg );
+		} catch ( Exception e ) {
+			return false;
+		}
+		return true;
+	}
+
+	public static int getInt( String arg ) {
+		if ( isInt( arg ) ) {
+			return Integer.parseInt( arg );
+		}
+		return Integer.MIN_VALUE;
 	}
 
 	public static EmbedBuilder createDefaultBuilder() {

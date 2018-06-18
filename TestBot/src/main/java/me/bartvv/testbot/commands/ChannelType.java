@@ -5,7 +5,7 @@ import net.dv8tion.jda.core.entities.Channel;
 
 public enum ChannelType {
 
-	BOT_CHANNEL, SUPPORT_CATEGORY, SUPPORT_CHANNEL, ACTIVITY_CHANNEL, ALl;
+	BOT_CHANNEL, SUPPORT_CATEGORY, SUPPORT_CHANNEL, ACTIVITY_CHANNEL, ALL;
 
 	public static ChannelType getChannelType( Channel channel ) {
 		if ( channel.getIdLong() == Utils.getActivityChannel() )
@@ -18,6 +18,6 @@ public enum ChannelType {
 			return ChannelType.SUPPORT_CHANNEL;
 
 		// If it is not a specific channel, just return all
-		return ChannelType.ALl;
+		return ChannelType.ALL;
 	}
 }

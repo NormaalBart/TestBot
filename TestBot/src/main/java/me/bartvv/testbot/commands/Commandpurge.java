@@ -13,7 +13,7 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
-public class Commandclear implements ICommand {
+public class Commandpurge implements ICommand {
 
 	@Override
 	public void onCommand( GuildMessageReceivedEvent e ) {
@@ -69,12 +69,12 @@ public class Commandclear implements ICommand {
 
 	@Override
 	public String getDescription() {
-		return "Clear's the amount of messages specified.";
+		return "Purges the amount of messages specified.";
 	}
 
 	@Override
 	public String getUsage() {
-		return "Clear <amount>";
+		return "Purge <amount>";
 	}
 	
 	@Override
@@ -84,7 +84,6 @@ public class Commandclear implements ICommand {
 	
 	@Override
 	public List< String > getAliases() {
-		// TODO Auto-generated method stub
-		return ICommand.super.getAliases();
+		return Lists.newArrayList( "clear" );
 	}
 }
