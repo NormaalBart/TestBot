@@ -1,5 +1,6 @@
 package me.bartvv.testbot.commands;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -16,6 +17,10 @@ public interface ICommand {
 
 	public default List< ChannelType > getChannelTypes() {
 		return Lists.newArrayList( ChannelType.BOT_CHANNEL );
+	}
+
+	public default List< String > getAliases() {
+		return Collections.emptyList();
 	}
 
 }
