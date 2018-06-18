@@ -1,6 +1,5 @@
 package me.bartvv.testbot.commands;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +33,8 @@ public class CommandHandler {
 		commands.put( "support", new Commandsupport( this ) );
 		commands.put( "close", new Commandclose() );
 		commands.put( "prime", new Commandprime() );
+		commands.put( "info", new Commandinfo() );
+
 		List< ICommand > iCommands = Lists.newArrayList( commands.values() );
 
 		iCommands.stream().forEach(
