@@ -54,9 +54,7 @@ public class Commandadd implements ICommand {
 
 			@Override
 			public void accept( PermissionOverride t ) {
-				EmbedBuilder builder = Utils.createDefaultBuilder();
-				builder.addField( "Added " + targetMember.getUser().getName() + " to the support-ticket", "", false );
-				channel.sendMessage( builder.build() ).queue();
+				channel.sendMessage( "Added " + targetMember.getUser().getName() + " to the support-ticket" ).queue();
 			}
 		} );
 	}
