@@ -44,10 +44,8 @@ public class Commandremove implements ICommand {
 
 			@Override
 			public void accept( Void t ) {
-				EmbedBuilder builder = Utils.createDefaultBuilder();
-				builder.addField( "Removed " + targetMember.getUser().getName() + " from the support-ticket", "",
-						false );
-				channel.sendMessage( builder.build() ).queue();
+				channel.sendMessage( "Removed " + targetMember.getUser().getName() + " from the support-ticket" )
+						.queue();
 			}
 		} );
 	}
