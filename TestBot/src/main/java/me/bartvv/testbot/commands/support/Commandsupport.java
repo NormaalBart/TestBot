@@ -6,10 +6,9 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
-import me.bartvv.testbot.Utils;
-import me.bartvv.testbot.commands.ChannelType;
 import me.bartvv.testbot.commands.CommandHandler;
 import me.bartvv.testbot.commands.ICommand;
+import me.bartvv.testbot.enums.ChannelType;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Category;
 import net.dv8tion.jda.core.entities.Channel;
@@ -24,24 +23,14 @@ public class Commandsupport implements ICommand {
 	public Commandsupport( CommandHandler commandHandler ) {
 		commandHandler.getCommands().put( "add", new Commandadd() );
 		commandHandler.getCommands().put( "remove", new Commandremove() );
-		
+
 	}
 
 	@Override
 	public void onCommand( GuildMessageReceivedEvent e ) {
-		TextChannel textChannel = e.getChannel();
-		if ( textChannel.getIdLong() != Utils.getSupportChannel()
-				&& textChannel.getIdLong() != Utils.getBotChannel() ) {
-			e.getMessage().delete().complete();
-			TextChannel botChannel = e.getGuild().getTextChannelById( Utils.getBotChannel() );
-			Utils.sendMessage( textChannel, "Please refrain from using other channel's then the " + botChannel
-					+ " channel, " + e.getAuthor().getAsMention() );
-			return;
-		}
-
 		Guild guild = e.getGuild();
 		User user = e.getAuthor();
-		Category category = guild.getCategoryById( Utils.getSupportCategory() );
+		Category category = guild.getCategoryById( ChannelType.SUPPORT_CATEGORY.getID() );
 		List< TextChannel > channels = category.getTextChannels().stream().filter(
 				channel -> channel.getName().toLowerCase().startsWith( "support-" + user.getName().toLowerCase() ) )
 				.collect( Collectors.toList() );

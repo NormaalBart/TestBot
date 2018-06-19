@@ -13,11 +13,6 @@ public class Utils {
 
 	private static String token = "Put-your-token-here";
 	private static String command = "!";
-	private static long activityChannel = 453992903321190404L;
-	private static long botChannel = 452556595461619722L;
-	private static long supportCategory = 452541895407697940L;
-	private static long supportChannel = 452541677450821642L;
-	private static long joinChannel = 454656658661179392L;
 
 	public static String getToken() {
 		return token;
@@ -25,26 +20,6 @@ public class Utils {
 
 	public static String getCommand() {
 		return command;
-	}
-
-	public static long getActivityChannel() {
-		return activityChannel;
-	}
-
-	public static long getBotChannel() {
-		return botChannel;
-	}
-
-	public static long getSupportCategory() {
-		return supportCategory;
-	}
-
-	public static long getSupportChannel() {
-		return supportChannel;
-	}
-
-	public static long getJoinChannel() {
-		return joinChannel;
 	}
 
 	public static boolean checkCommand( String message, String command ) {

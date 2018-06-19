@@ -1,9 +1,9 @@
 package me.bartvv.testbot.listener;
 
 import me.bartvv.testbot.Utils;
-import me.bartvv.testbot.commands.ChannelType;
 import me.bartvv.testbot.commands.CommandHandler;
 import me.bartvv.testbot.commands.ICommand;
+import me.bartvv.testbot.enums.ChannelType;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -23,14 +23,14 @@ public class CommandListener extends ListenerAdapter {
 		Message message = e.getMessage();
 		String rawMessage = message.getRawContent();
 		TextChannel channel = e.getChannel();
-		TextChannel botChannel = e.getGuild().getTextChannelById( Utils.getBotChannel() );
+		TextChannel botChannel = e.getGuild().getTextChannelById( ChannelType.BOT_CHANNEL.getID() );
 		User user = e.getAuthor();
 
 		// Make sure it isn't bot spamming
 		if ( user.isBot() )
 			return;
 
-		if ( channel.getIdLong() == Utils.getBotChannel() ) {
+		if ( ChannelType.getChannelType( channel ) == ChannelType.BOT_CHANNEL ) {
 			if ( rawMessage.startsWith( Utils.getCommand() ) ) {
 				this.commandHandler.processCommand( e );
 				return;

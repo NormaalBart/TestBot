@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import me.bartvv.testbot.Utils;
+import me.bartvv.testbot.enums.ChannelType;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -53,7 +54,7 @@ public class Commandhere implements ICommand {
 
 		EmbedBuilder builder = Utils.createDefaultBuilder();
 		builder.addField( "User marked!", user.getAsMention() + " marked himself!", false );
-		TextChannel activiyChannel = e.getGuild().getTextChannelById( Utils.getActivityChannel() );
+		TextChannel activiyChannel = e.getGuild().getTextChannelById( ChannelType.ACTIVITY_CHANNEL.getID() );
 		builder.setTimestamp( Instant.now() );
 		Utils.sendMessage( activiyChannel, builder.build(), -1 );
 		this.cooldowns.put( id, System.currentTimeMillis() );

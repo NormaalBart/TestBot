@@ -6,8 +6,8 @@ import java.util.function.Consumer;
 import com.google.common.collect.Lists;
 
 import me.bartvv.testbot.Utils;
-import me.bartvv.testbot.commands.ChannelType;
 import me.bartvv.testbot.commands.ICommand;
+import me.bartvv.testbot.enums.ChannelType;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;

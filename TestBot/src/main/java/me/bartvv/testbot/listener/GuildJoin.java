@@ -1,6 +1,7 @@
 package me.bartvv.testbot.listener;
 
 import me.bartvv.testbot.Utils;
+import me.bartvv.testbot.enums.ChannelType;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
@@ -18,7 +19,7 @@ public class GuildJoin extends ListenerAdapter {
 		EmbedBuilder builder = Utils.createDefaultBuilder();
 		builder.addField( member.getUser().getName() + " welcome to our discord server!",
 				"Their are now " + size + " members in this discord.", false );
-		TextChannel channel = guild.getTextChannelById( Utils.getJoinChannel() );
+		TextChannel channel = guild.getTextChannelById( ChannelType.JOIN_CHANNEL.getID() );
 		channel.sendMessage( builder.build() ).queue();
 	}
 
