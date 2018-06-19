@@ -76,12 +76,12 @@ public class Commandpurge implements ICommand {
 	public String getUsage() {
 		return "Purge <amount>";
 	}
-	
+
 	@Override
 	public List< ChannelType > getChannelTypes() {
 		return Lists.newArrayList( ChannelType.ALL );
 	}
-	
+
 	@Override
 	public List< String > getAliases() {
 		return Lists.newArrayList( "clear" );
