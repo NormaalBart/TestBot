@@ -1,21 +1,26 @@
-package me.bartvv.testbot.commands;
+package me.bartvv.testbot.guild.commands;
 
 import me.bartvv.testbot.Utils;
+import me.bartvv.testbot.guild.GuildHandler;
+import me.bartvv.testbot.guild.User;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.exceptions.HierarchyException;
 
 public class Commandkick implements ICommand {
 
+	private GuildHandler guildHandler;
+
+	public Commandkick( GuildHandler guildHandler ) {
+		this.guildHandler = guildHandler;
+	}
+
 	@Override
-	public void onCommand( GuildMessageReceivedEvent e ) {
-		Member member = e.getMember();
+	public void onCommand( User user, GuildMessageReceivedEvent e ) {
 		MessageChannel channel = e.getChannel();
-		if ( !member.hasPermission( Permission.KICK_MEMBERS ) ) {
+		if ( !user.hasPermission( Permission.KICK_MEMBERS ) ) {
 			return;
 		}
 		String[] args = e.getMessage().getRawContent().split( " " );
@@ -26,16 +31,18 @@ public class Commandkick implements ICommand {
 			return;
 		}
 
-		User target = e.getMessage().getMentionedUsers().isEmpty() ? null : e.getMessage().getMentionedUsers().get( 0 );
+		User target = this.guildHandler.getUserHandler().getUser(
+				e.getMessage().getMentionedUsers().isEmpty() ? null : e.getMessage().getMentionedUsers().get( 0 ) );
+		
 		if ( target == null ) {
-			Utils.sendMessage( channel, member.getAsMention() + " user not found" );
+			Utils.sendMessage( channel, user.getAsMention() + " user not found" );
 			return;
 		}
 
 		try {
-			e.getGuild().getController().kick( e.getGuild().getMember( target ) );
+			target.kick();
 		} catch ( HierarchyException exc ) {
-			Utils.sendMessage( channel, member.getAsMention() + ", failed to kick " + target.getAsMention()
+			Utils.sendMessage( channel, user.getAsMention() + ", failed to kick " + target.getAsMention()
 					+ " because he has equal or higher powers than me." );
 			return;
 		}

@@ -1,14 +1,22 @@
-package me.bartvv.testbot.commands;
+package me.bartvv.testbot.guild.commands;
 
 import me.bartvv.testbot.Utils;
+import me.bartvv.testbot.guild.GuildHandler;
+import me.bartvv.testbot.guild.User;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class Commandprime implements ICommand {
 
+	private GuildHandler guildHandler;
+
+	public Commandprime( GuildHandler guildHandler ) {
+		this.guildHandler = guildHandler;
+	}
+
 	@Override
-	public void onCommand( GuildMessageReceivedEvent e ) {
+	public void onCommand( User user, GuildMessageReceivedEvent e ) {
 		String[] args = e.getMessage().getRawContent().split( " " );
 		TextChannel channel = e.getChannel();
 		long number;

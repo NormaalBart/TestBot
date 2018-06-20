@@ -1,4 +1,4 @@
-package me.bartvv.testbot.commands;
+package me.bartvv.testbot.guild.commands;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -6,7 +6,9 @@ import java.util.function.Consumer;
 import com.google.common.collect.Lists;
 
 import me.bartvv.testbot.Utils;
-import me.bartvv.testbot.enums.ChannelType;
+import me.bartvv.testbot.guild.GuildHandler;
+import me.bartvv.testbot.guild.User;
+import me.bartvv.testbot.guild.channel.Channel.ChannelType;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
@@ -16,8 +18,14 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class Commandpurge implements ICommand {
 
+	private GuildHandler guildHandler;
+
+	public Commandpurge( GuildHandler guildHandler ) {
+		this.guildHandler = guildHandler;
+	}
+
 	@Override
-	public void onCommand( GuildMessageReceivedEvent e ) {
+	public void onCommand( User user, GuildMessageReceivedEvent e ) {
 		Member member = e.getMember();
 		if ( !member.hasPermission( Permission.MESSAGE_MANAGE ) )
 			return;

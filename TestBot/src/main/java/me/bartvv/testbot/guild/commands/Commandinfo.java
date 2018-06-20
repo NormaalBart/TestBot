@@ -1,42 +1,46 @@
-package me.bartvv.testbot.commands;
+package me.bartvv.testbot.guild.commands;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.List;
 
 import me.bartvv.testbot.Utils;
+import me.bartvv.testbot.guild.GuildHandler;
+import me.bartvv.testbot.guild.User;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class Commandinfo implements ICommand {
 
+	private GuildHandler guildHandler;
+
+	public Commandinfo( GuildHandler guildHandler ) {
+		this.guildHandler = guildHandler;
+	}
+
 	@Override
-	public void onCommand( GuildMessageReceivedEvent e ) {
+	public void onCommand( User user, GuildMessageReceivedEvent e ) {
 		String[] args = e.getMessage().getRawContent().split( " " );
 		TextChannel channel = e.getChannel();
-		Member member = e.getMember();
 
-		Member target;
+		User target;
 		if ( args.length == 2 ) {
-			User targetUser = e.getMessage().getMentionedUsers().isEmpty() ? null
-					: e.getMessage().getMentionedUsers().get( 0 );
-			if ( targetUser == null ) {
-				Utils.sendMessage( channel, member.getAsMention() + " user not found" );
+			target = this.guildHandler.getUserHandler().getUser(
+					e.getMessage().getMentionedUsers().isEmpty() ? null : e.getMessage().getMentionedUsers().get( 0 ) );
+
+			if ( target == null ) {
+				Utils.sendMessage( channel, user.getAsMention() + " user not found" );
 				return;
 			}
-			target = e.getGuild().getMember( targetUser );
 		} else {
-			target = e.getMember();
+			target = user;
 		}
 
 		EmbedBuilder embed = Utils.createDefaultBuilder();
-		embed.setAuthor( target.getUser().getName(), target.getUser().getEffectiveAvatarUrl(),
-				target.getUser().getEffectiveAvatarUrl() );
-		embed.setTitle( "Information about " + target.getUser().getName() );
+		embed.setAuthor( target.getName(), target.getEffectiveAvatarUrl(), target.getEffectiveAvatarUrl() );
+		embed.setTitle( "Information about " + target.getName() );
 		StringBuilder builder = new StringBuilder();
 		builder.append( "Nickname: " + ( target.getNickname() == null ? "none" : target.getNickname() ) );
 		builder.append( "\n" );

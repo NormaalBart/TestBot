@@ -1,6 +1,5 @@
-package me.bartvv.testbot.commands;
+package me.bartvv.testbot.guild.commands;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -11,9 +10,10 @@ import java.util.function.Consumer;
 import com.google.common.collect.Lists;
 
 import me.bartvv.testbot.Utils;
-import me.bartvv.testbot.enums.ChannelType;
+import me.bartvv.testbot.guild.GuildHandler;
+import me.bartvv.testbot.guild.User;
+import me.bartvv.testbot.guild.channel.Channel.ChannelType;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
@@ -21,25 +21,27 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 public class Commandclose implements ICommand {
 
 	private transient List< String > channelsBeingRemoved;
+	private GuildHandler guildHandler;
 
-	public Commandclose() {
-		this.channelsBeingRemoved = new ArrayList<>();
+	public Commandclose( GuildHandler guildHandler ) {
+		this.guildHandler = guildHandler;
+		this.channelsBeingRemoved = Lists.newArrayList();
 	}
 
 	@Override
-	public void onCommand( GuildMessageReceivedEvent e ) {
+	public void onCommand( User user, GuildMessageReceivedEvent e ) {
 		TextChannel channel = e.getChannel();
 		final String channelName = channel.getName();
 		if ( !channelName.startsWith( "support-" ) ) {
 			Utils.sendMessage( channel, "You cannot close a non-support ticket" );
 			return;
 		}
-		Member member = e.getMember();
-		String memberName = member.getUser().getName();
-		if ( !channelName.toLowerCase().startsWith( "support-" + memberName.toLowerCase() )
-				&& !member.hasPermission( Permission.MANAGE_CHANNEL ) ) {
+		
+		String userName = user.getName();
+		if ( !channelName.toLowerCase().startsWith( "support-" + userName.toLowerCase() )
+				&& !user.hasPermission( Permission.MANAGE_CHANNEL ) ) {
 			Utils.sendMessage( channel,
-					"You cannot delete this support channel, " + member.getAsMention() + ". Please ask staff." );
+					"You cannot delete this support channel, " + user.getAsMention() + ". Please ask staff." );
 			return;
 		}
 
