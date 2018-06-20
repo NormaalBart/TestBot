@@ -53,6 +53,7 @@ public class Commandhere implements ICommand {
 		TextChannel activiyChannel = e.getGuild().getTextChannelById( this.guildHandler.getChannel().ACTIVITY_CHANNEL );
 		builder.setTimestamp( Instant.now() );
 		Utils.sendMessage( activiyChannel, builder.build(), -1 );
+		Utils.sendMessage( channel, ":white_check_mark: You are marked as here!" );
 		user.setLastHere( System.currentTimeMillis() );
 	}
 
